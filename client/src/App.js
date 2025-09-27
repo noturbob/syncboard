@@ -5,6 +5,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Forgot from './components/Forgot/Forgot';
 import Home from './components/Home/Home'
+import ResetPassword from './components/ResetPassword/ResetPassword';
 
 import './App.css';
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         </Routes>
       </div>
