@@ -5,6 +5,8 @@
   align-items: center;
   height: 100vh;
   background-color: #f4f7f6;
+  padding-top: 60px; /* Add this line */
+  box-sizing: border-box; /* Add this line if it's not there */
 }
 
 .formWrapper {

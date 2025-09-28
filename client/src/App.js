@@ -1,28 +1,42 @@
-// src/App.js
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
 import WhiteboardPage from './components/WhiteboardPage/WhiteboardPage';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Forgot from './components/Forgot/Forgot';
-import Home from './components/Home/Home'
+import Home from './components/Home/Home';
+import Dashboard from './components/Dashboard/Dashboard';
 import ResetPassword from './components/ResetPassword/ResetPassword';
-
+import Projects from './components/Projects/Projects'; // 1. Import Projects
 import './App.css';
+
+const AppLayout = () => {
+  const location = useLocation();
+  const showNavbar = location.pathname !== '/whiteboard';
+
+  return (
+    <>
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/whiteboard" element={<WhiteboardPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/projects" element={<Projects />} /> {/* 2. Add Projects route */}
+      </Routes>
+    </>
+  );
+};
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
-          
-          <Route path="/" element={<WhiteboardPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot" element={<Forgot />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-        </Routes>
+        <AppLayout />
       </div>
     </Router>
   );
