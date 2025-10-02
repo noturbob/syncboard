@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // <-- FIX IS HERE
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../utils/api';
 import styles from './Home.module.css';
@@ -47,6 +47,7 @@ const Home = () => {
             <h2>Create New Board</h2>
             <p>Start a solo project on a fresh canvas.</p>
           </Link>
+          {/* This card now opens the modal */}
           <div className={styles.card} onClick={openModal}>
             <h2>Create a Co-board</h2>
             <p>Generate an invite link to collaborate in real-time.</p>
@@ -58,10 +59,13 @@ const Home = () => {
         </div>
       </div>
 
+      {/* --- Modal Logic --- */}
       {isModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <button onClick={closeModal} className={styles.closeButton}>×</button>
+            
+            {/* Stage 1: Show initial options */}
             {!inviteLink ? (
               <>
                 <h2>Create a Co-board</h2>
@@ -71,8 +75,9 @@ const Home = () => {
                 </div>
               </>
             ) : (
+            /* Stage 2: Show the generated link */
               <>
-                <h2>Share this link</h2>
+                <h2>Share This Link</h2>
                 <input type="text" readOnly value={inviteLink} className={styles.linkInput} />
                 <div className={styles.modalActions}>
                   <button onClick={copyLink} className={styles.modalButton}>Copy Link</button>

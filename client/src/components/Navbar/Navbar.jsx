@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../utils/api'; // Make sure you have your api helper
+import { AuthContext } from '../../context/AuthContext';
+import api from '../../utils/api';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -20,20 +22,18 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      // Call the backend to blacklist the token before clearing it locally
       await api.post('/auth/logout');
     } catch (err) {
-      console.error('Error logging out on server', err);
+      console.error('Error logging out on server:', err);
     } finally {
-      // Always perform client-side logout
-      localStorage.removeItem('token');
+      logout();
       navigate('/login');
     }
   };
 
   return (
     <nav className={styles.navbar} ref={menuRef}>
-      <Link to="/home" className={styles.brand}>
+      <Link to="/" className={styles.brand}>
         Syncboard
       </Link>
       <div className={styles.hamburgerContainer}>
@@ -49,12 +49,15 @@ const Navbar = () => {
         </div>
         {isOpen && (
           <div className={styles.menu}>
-            <Link to="/dashboard" className={styles.menuLink}>Dashboard</Link>
-            <Link to="/profile" className={styles.menuLink}>Profile</Link>
-            <Link to="/settings" className={styles.menuLink}>Settings</Link>
+            <Link to="/dashboard" className={styles.menuLink} onClick={() => setIsOpen(false)}>Dashboard</Link>
+            <Link to="/projects" className={styles.menuLink} onClick={() => setIsOpen(false)}>Projects</Link>
+            <Link to="/settings" className={styles.menuLink} onClick={() => setIsOpen(false)}>Settings</Link>
             <div className={styles.divider}></div>
-            {/* Changed to a button with an onClick handler */}
-            <button onClick={handleLogout} className={styles.menuLink}>Logout</button>
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className={styles.menuLink}>Logout</button>
+            ) : (
+              <Link to="/login" className={styles.menuLink} onClick={() => setIsOpen(false)}>Login</Link>
+            )}
           </div>
         )}
       </div>

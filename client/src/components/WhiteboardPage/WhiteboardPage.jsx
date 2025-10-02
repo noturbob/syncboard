@@ -11,6 +11,7 @@ const WhiteboardPage = () => {
   const { boardId: boardIdFromUrl } = useParams();
   const [color, setColor] = useState("black");
   const [brushSize, setBrushSize] = useState(5);
+  const [activeTool, setTool] = useState('pencil');
   const [boardId, setBoardId] = useState(boardIdFromUrl);
   const [boardName, setBoardName] = useState('Untitled Board');
   const [boardData, setBoardData] = useState([]);
@@ -21,29 +22,23 @@ const WhiteboardPage = () => {
 
   const debouncedBoardData = useDebounce(boardData, 2000);
 
-  // Effect for Socket.IO connection and events
   useEffect(() => {
     socketRef.current = io.connect("http://localhost:4000");
-
     if (boardIdFromUrl) {
       socketRef.current.emit('join-board', boardIdFromUrl);
     }
-
     socketRef.current.on('cursor-update', (data) => {
-      if (data.socketId !== socketRef.current.id) {
-        setOtherCursors(prevCursors => ({
-          ...prevCursors,
-          [data.socketId]: data,
-        }));
+      if (socketRef.current && data.socketId !== socketRef.current.id) {
+        setOtherCursors(prevCursors => ({ ...prevCursors, [data.socketId]: data }));
       }
     });
-
     return () => {
-      socketRef.current.disconnect();
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
     };
   }, [boardIdFromUrl]);
 
-  // Effect to fetch the current user's data
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -56,7 +51,6 @@ const WhiteboardPage = () => {
     fetchUser();
   }, []);
 
-  // Effect to load board data
   useEffect(() => {
     const loadBoard = async () => {
       if (boardIdFromUrl) {
@@ -75,10 +69,8 @@ const WhiteboardPage = () => {
     loadBoard();
   }, [boardIdFromUrl]);
 
-  // Effect for autosaving
   useEffect(() => {
     if (debouncedBoardData.length === 0 && !boardId) return;
-
     const autoSave = async () => {
       try {
         const boardPayload = { boardName, boardData: debouncedBoardData };
@@ -94,7 +86,6 @@ const WhiteboardPage = () => {
         console.error('Autosave failed:', err);
       }
     };
-    
     if (debouncedBoardData.length > 0) {
       autoSave();
     }
@@ -119,7 +110,9 @@ const WhiteboardPage = () => {
     <div onMouseMove={handleMouseMove}>
       <Toolbar 
         setColor={setColor} 
-        setBrushSize={setBrushSize} 
+        setBrushSize={setBrushSize}
+        setTool={setTool}
+        activeTool={activeTool}
         onClear={() => whiteboardRef.current.clearCanvas()}
       />
       <input 
@@ -135,7 +128,8 @@ const WhiteboardPage = () => {
       />
       <Whiteboard 
         color={color} 
-        brushSize={brushSize} 
+        brushSize={brushSize}
+        tool={activeTool}
         ref={whiteboardRef} 
         onDraw={handleDrawingChange}
         socket={socketRef.current}

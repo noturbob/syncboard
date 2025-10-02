@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 import styles from './Login.module.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,11 +25,9 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:4000/api/auth/login', { email, password });
       
-      // Save the token to browser's local storage
-      localStorage.setItem('token', res.data.token);
+      login(res.data.token);
       
-      // Redirect to the home page
-      navigate('/home');
+      navigate('/');
 
     } catch (err) {
       setError(err.response?.data?.msg || 'An error occurred.');
