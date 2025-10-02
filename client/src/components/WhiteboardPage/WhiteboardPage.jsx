@@ -22,16 +22,23 @@ const WhiteboardPage = () => {
 
   const debouncedBoardData = useDebounce(boardData, 2000);
 
+  // Effect for Socket.IO connection and events
   useEffect(() => {
     socketRef.current = io.connect("http://localhost:4000");
+
     if (boardIdFromUrl) {
       socketRef.current.emit('join-board', boardIdFromUrl);
     }
+
     socketRef.current.on('cursor-update', (data) => {
       if (socketRef.current && data.socketId !== socketRef.current.id) {
-        setOtherCursors(prevCursors => ({ ...prevCursors, [data.socketId]: data }));
+        setOtherCursors(prevCursors => ({
+          ...prevCursors,
+          [data.socketId]: data,
+        }));
       }
     });
+
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -39,6 +46,7 @@ const WhiteboardPage = () => {
     };
   }, [boardIdFromUrl]);
 
+  // Effect to fetch the current user's data
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -51,6 +59,7 @@ const WhiteboardPage = () => {
     fetchUser();
   }, []);
 
+  // Effect to load board data
   useEffect(() => {
     const loadBoard = async () => {
       if (boardIdFromUrl) {
@@ -69,8 +78,10 @@ const WhiteboardPage = () => {
     loadBoard();
   }, [boardIdFromUrl]);
 
+  // Effect for autosaving
   useEffect(() => {
     if (debouncedBoardData.length === 0 && !boardId) return;
+
     const autoSave = async () => {
       try {
         const boardPayload = { boardName, boardData: debouncedBoardData };
@@ -86,6 +97,7 @@ const WhiteboardPage = () => {
         console.error('Autosave failed:', err);
       }
     };
+    
     if (debouncedBoardData.length > 0) {
       autoSave();
     }
@@ -119,12 +131,7 @@ const WhiteboardPage = () => {
         type="text" 
         value={boardName} 
         onChange={(e) => setBoardName(e.target.value)}
-        style={{
-          position: 'absolute', top: 20, left: '50%', transform: 'translateX(-50%)',
-          zIndex: 1000, padding: '10px', border: '1px solid #ccc',
-          borderRadius: '5px', textAlign: 'center', fontSize: '1rem',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-        }}
+        className="absolute top-5 left-1/2 -translate-x-1/2 z-50 w-auto min-w-[256px] p-2 text-center bg-white/50 backdrop-blur-md text-accent font-semibold text-lg rounded-lg border border-gray-200 shadow-md focus:outline-none focus:ring-2 focus:ring-accent placeholder-purple-400"
       />
       <Whiteboard 
         color={color} 

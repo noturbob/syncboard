@@ -43,6 +43,7 @@ function App() {
     <AuthProvider>
        <Router>
       <div className="App">
+        <div className="animated-background"></div>
         <AppLayout />
       </div>
     </Router>

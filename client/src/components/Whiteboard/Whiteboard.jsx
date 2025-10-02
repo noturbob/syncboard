@@ -1,5 +1,4 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
-import styles from './Whiteboard.module.css';
 
 const Whiteboard = forwardRef(({ color, brushSize, onDraw, socket, boardId, tool }, ref) => {
   const canvasRef = useRef(null);
@@ -174,14 +173,16 @@ const Whiteboard = forwardRef(({ color, brushSize, onDraw, socket, boardId, tool
   };
 
   return (
-    <canvas
-      className={styles.canvas}
-      onMouseDown={startDrawing}
-      onMouseMove={draw}
-      onMouseUp={stopDrawing}
-      onMouseLeave={stopDrawing}
-      ref={canvasRef}
-    />
+    <div className="absolute top-0 left-0 w-full h-full bg-white bg-dotted-pattern bg-dotted-size">
+      <canvas
+        className="absolute top-0 left-0 bg-transparent"
+        onMouseDown={startDrawing}
+        onMouseMove={draw}
+        onMouseUp={stopDrawing}
+        onMouseLeave={stopDrawing}
+        ref={canvasRef}
+      />
+    </div>
   );
 });
 
