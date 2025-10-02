@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // <-- FIX IS HERE
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../utils/api';
 import styles from './Home.module.css';
@@ -37,7 +37,11 @@ const Home = () => {
   return (
     <>
       <div className={styles.container}>
-        {/* ... (header is the same) ... */}
+        <header className={styles.header}>
+          <h1>Welcome to Syncboard</h1>
+          <p>Choose an option to begin collaborating.</p>
+        </header>
+
         <div className={styles.cardContainer}>
           <Link to="/whiteboard" className={styles.card}>
             <h2>Create New Board</h2>

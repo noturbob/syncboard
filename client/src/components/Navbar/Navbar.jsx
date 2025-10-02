@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../../utils/api'; // Make sure you have your api helper
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
-  // This effect closes the menu if you click outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -14,10 +15,21 @@ const Navbar = () => {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      // Call the backend to blacklist the token before clearing it locally
+      await api.post('/auth/logout');
+    } catch (err) {
+      console.error('Error logging out on server', err);
+    } finally {
+      // Always perform client-side logout
+      localStorage.removeItem('token');
+      navigate('/login');
+    }
+  };
 
   return (
     <nav className={styles.navbar} ref={menuRef}>
@@ -25,7 +37,6 @@ const Navbar = () => {
         Syncboard
       </Link>
       <div className={styles.hamburgerContainer}>
-        {/* --- Added Profile Picture --- */}
         <img 
           src="https://i.pravatar.cc/150?img=3" 
           alt="Profile" 
@@ -42,7 +53,8 @@ const Navbar = () => {
             <Link to="/profile" className={styles.menuLink}>Profile</Link>
             <Link to="/settings" className={styles.menuLink}>Settings</Link>
             <div className={styles.divider}></div>
-            <Link to="/login" className={styles.menuLink}>Logout</Link>
+            {/* Changed to a button with an onClick handler */}
+            <button onClick={handleLogout} className={styles.menuLink}>Logout</button>
           </div>
         )}
       </div>
