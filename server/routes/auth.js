@@ -3,8 +3,25 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const auth = require('../middleware/auth'); // Middleware to protect routes
 const User = require('../models/User');
 
+// @route   GET /api/auth
+// @desc    Get logged-in user's data (without password)
+// @access  Private
+router.get('/', auth, async (req, res) => {
+  try {
+    // req.user.id is attached by the auth middleware from the token
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   POST /api/auth/signup
+// @desc    Register a new user
 router.post('/signup', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -21,6 +38,8 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// @route   POST /api/auth/login
+// @desc    Authenticate user & get token
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -48,6 +67,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// @route   POST /api/auth/forgot-password
+// @desc    Handle forgot password request
 router.post('/forgot-password', async (req, res) => {
   try {
     const { email } = req.body;
@@ -66,10 +87,12 @@ router.post('/forgot-password', async (req, res) => {
     res.json({ msg: 'Password reset link has been generated. Check the server console.' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send('Server error');
   }
 });
 
+// @route   POST /api/auth/reset-password/:token
+// @desc    Reset password
 router.post('/reset-password/:token', async (req, res) => {
   try {
     const user = await User.findOne({

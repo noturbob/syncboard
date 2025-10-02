@@ -1,0 +1,17 @@
+.cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3000;
+  transition: left 0.05s linear, top 0.05s linear; /* Smoothes cursor movement */
+}
+
+.name {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}

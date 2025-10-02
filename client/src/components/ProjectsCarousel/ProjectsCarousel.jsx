@@ -1,48 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../../utils/api';
 import styles from './ProjectsCarousel.module.css';
 
 const ProjectsCarousel = () => {
-  const projectData = [
-    { id: 1, category: "Team Project", title: "Q3 Marketing Brainstorm", src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070" },
-    { id: 2, category: "Solo Project", title: "UI/UX Mockups", src: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2070" },
-    { id: 3, category: "Archived", title: "Old Wireframes", src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070" },
-    { id: 4, category: "Team Project", title: "New Feature Planning", src: "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974" },
-    { id: 5, category: "Solo Project", title: "Personal Portfolio", src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070" },
-  ];
-
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get('/boards');
+        setProjects(res.data);
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? projectData.length - 3 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? Math.max(0, projects.length - 3) : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === projectData.length - 3 ? 0 : prevIndex + 1));
+    if (currentIndex >= projects.length - 3) return;
+    setCurrentIndex((prevIndex) => prevIndex + 1);
   };
+
+  if (loading) {
+    return <div className={styles.container}><p>Loading projects...</p></div>;
+  }
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Your Projects</h2>
-      <div className={styles.carouselContainer}>
-        <button onClick={handlePrev} className={`${styles.arrow} ${styles.left}`}>‹</button>
-        <div className={styles.cardWrapper}>
-          {projectData.slice(currentIndex, currentIndex + 3).map((card) => (
-            <Card key={card.id} card={card} />
-          ))}
+      {projects.length === 0 ? (
+        <p style={{ textAlign: 'center' }}>You haven't created any boards yet.</p>
+      ) : (
+        <div className={styles.carouselContainer}>
+          <button onClick={handlePrev} className={`${styles.arrow} ${styles.left}`}>‹</button>
+          <div className={styles.cardWrapper}>
+            {projects.slice(currentIndex, currentIndex + 3).map((project) => (
+              <Card key={project._id} card={project} />
+            ))}
+          </div>
+          <button onClick={handleNext} className={`${styles.arrow} ${styles.right}`}>›</button>
         </div>
-        <button onClick={handleNext} className={`${styles.arrow} ${styles.right}`}>›</button>
-      </div>
+      )}
     </div>
   );
 };
 
 const Card = ({ card }) => {
+  const navigate = useNavigate();
+  const imageUrl = "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070";
+
+  const handleOpen = () => {
+    navigate(`/whiteboard/${card._id}`);
+  };
+  
   return (
-    <div className={styles.card}>
-      <img src={card.src} alt={card.title} className={styles.cardImage} />
+    <div className={styles.card} onClick={handleOpen}>
+      <img src={imageUrl} alt={card.boardName} className={styles.cardImage} />
       <div className={styles.cardHeader}>
-        <p className={styles.cardCategory}>{card.category}</p>
-        <h3 className={styles.cardTitle}>{card.title}</h3>
+        <h3 className={styles.cardTitle}>{card.boardName}</h3>
       </div>
     </div>
   );
