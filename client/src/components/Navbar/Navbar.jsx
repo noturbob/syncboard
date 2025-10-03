@@ -51,8 +51,8 @@ const Navbar = () => {
         </div>
         {isOpen && (
           <div className="absolute top-full mt-3 right-0 w-48 py-2 bg-black/30 backdrop-blur-lg rounded-xl border border-white/10 shadow-xl flex flex-col">
+            <Link to="/profile" className="px-4 py-2 text-highlight hover:bg-white/10 transition-colors" onClick={() => setIsOpen(false)}>Profile</Link>
             <Link to="/dashboard" className="px-4 py-2 text-highlight hover:bg-white/10 transition-colors" onClick={() => setIsOpen(false)}>Dashboard</Link>
-            <Link to="/projects" className="px-4 py-2 text-highlight hover:bg-white/10 transition-colors" onClick={() => setIsOpen(false)}>Projects</Link>
             <Link to="/settings" className="px-4 py-2 text-highlight hover:bg-white/10 transition-colors" onClick={() => setIsOpen(false)}>Settings</Link>
             <div className="h-px bg-white/20 my-2"></div>
             {isAuthenticated ? (

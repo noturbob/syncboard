@@ -1,11 +1,34 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-primary text-highlight; /* Use our custom colors */
+/* Import Inter font globally */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent default browser scroll */
 }
 
+/* The main app container will handle scrolling */
+.App {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto; /* Enable vertical scrolling for the app content */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  position: relative; /* Establish stacking context */
+  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+body {
+  @apply bg-primary text-highlight font-sans; /* Apply global theme colors and font */
+}
+
+/* Animated Background (as previously discussed) */
 .animated-background {
   position: fixed;
   top: 0;
@@ -14,14 +37,26 @@ body {
   bottom: 0;
   width: 100%;
   height: 100vh;
-  z-index: -1; /* Place it behind all content */
-  
+  z-index: -1;
   background-image:
-    radial-gradient(ellipse 20% 60% at 20% 40%, rgba(159, 122, 234, 0.3), transparent),
-    radial-gradient(ellipse 20% 60% at 80% 50%, rgba(93, 8, 169, 0.2), transparent);
-  
+    radial-gradient(ellipse 20% 60% at 20% 40%, rgba(163, 130, 255, 0.2), transparent), /* accent */
+    radial-gradient(ellipse 20% 60% at 80% 50%, rgba(139, 92, 246, 0.15), transparent); /* accent-dark */
   background-size: 150% 150%;
   background-position: 50% 50%;
-  
   animation: aurora 60s linear infinite;
+}
+
+/* Custom scrollbar for dark theme (optional, but nice touch) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #18152e; /* primary */
+}
+::-webkit-scrollbar-thumb {
+  background: #a382ff; /* accent */
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6; /* accent-dark */
 }
