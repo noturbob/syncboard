@@ -19,22 +19,24 @@ import './App.css';
 
 const AppLayout = () => {
   const location = useLocation();
-  // Hide the main app navbar on the whiteboard and the new landing page
-  const showNavbar = !location.pathname.startsWith('/whiteboard') && location.pathname !== '/landing';
+  // List of all public-facing pages where the main app Navbar should NOT be shown
+  const publicPaths = ['/', '/login', '/signup', '/forgot', '/reset-password'];
+
+  const showNavbar = !location.pathname.startsWith('/whiteboard') && !publicPaths.includes(location.pathname);
 
   return (
     <>
       {showNavbar && <Navbar />}
       <Routes>
         {/* --- Public Routes --- */}
-        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* --- Protected Routes --- */}
-        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/projects" element={<PrivateRoute><Projects /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />

@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:4000/api/auth/login', { email, password });
       login(res.data.token);
-      navigate('/');
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.msg || 'An error occurred.');
     }

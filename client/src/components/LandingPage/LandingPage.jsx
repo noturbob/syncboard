@@ -4,8 +4,7 @@ import React, { useEffect, useRef } from 'react';
 const useScrollAnimation = (rootMargin = '0px', threshold = 0.2) => {
     const elementsRef = useRef([]);
     useEffect(() => {
-        const currentElements = elementsRef.current; // Store the ref value
-
+        const currentElements = elementsRef.current;
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -15,12 +14,9 @@ const useScrollAnimation = (rootMargin = '0px', threshold = 0.2) => {
                 }
             });
         }, { root: null, rootMargin, threshold });
-        
         currentElements.forEach(el => {
             if (el) observer.observe(el);
         });
-
-        // Use the stored variable in the cleanup function
         return () => {
             if (currentElements) {
                 currentElements.forEach(el => {
@@ -94,8 +90,8 @@ const LandingPage = () => {
                         <a href="#features" className="hover:text-accent transition">Features</a>
                         <a href="#contact" className="hover:text-accent transition">Contact</a>
                     </div>
-                    <a href="/signup" className="bg-accent-dark hover:bg-accent text-white font-semibold py-2 px-4 rounded-lg transition shadow-md shadow-accent-dark/30">
-                        Start Free Trial
+                    <a href="/login" className="bg-accent-dark hover:bg-accent text-white font-semibold py-2 px-4 rounded-lg transition shadow-md shadow-accent-dark/30">
+                        Login
                     </a>
                 </nav>
             </header>
@@ -105,7 +101,7 @@ const LandingPage = () => {
                     <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(#2c2a4b_1px,transparent_1px)] [background-size:16px_16px]"></div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                         <p ref={heroRefs.tagline} className="fade-in inline-block text-sm font-medium text-accent bg-accent-dark/30 rounded-full px-3 py-1 mb-4 shadow-lg shadow-accent-dark/50">
-                            Collaborate, Create, Sync 🚀
+                            Collaborate, Create, Sync
                         </p>
                         <h1 ref={heroRefs.title} className="fade-in text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6">
                             The Real-Time <br className="hidden sm:inline" />
@@ -158,7 +154,7 @@ const LandingPage = () => {
                             <p className="text-lg font-bold tracking-tight text-accent">
                                 <span className="text-highlight">Sync</span>Board
                             </p>
-                            <p className="text-sm text-subtle/70 mt-1">© 2024 SyncBoard Inc. All rights reserved.</p>
+                            <p className="text-sm text-subtle/70 mt-1">© 2025 SyncBoard Inc. All rights reserved.</p>
                         </div>
                         <div className="space-x-6 text-subtle text-sm">
                             <a href="/terms" className="hover:text-accent transition">Terms of Service</a>

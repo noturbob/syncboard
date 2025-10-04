@@ -36,7 +36,9 @@ const Navbar = () => {
       ref={menuRef}
     >
       <Link to="/" className="text-2xl font-bold text-highlight">
-        Syncboard
+      <p>
+        <span className="text-highlight">Sync</span>Board
+      </p>
       </Link>
       <div className="relative flex items-center gap-4">
         <img 
