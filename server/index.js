@@ -8,7 +8,15 @@ require('dotenv').config();
 
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://syncboard-xi.vercel.app/',  // ✅ replace this
+    'http://localhost:3000' // optional for local testing
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 const server = http.createServer(app);
