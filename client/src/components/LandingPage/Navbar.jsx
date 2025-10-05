@@ -1,4 +1,3 @@
-// src/components/LandingPage/Navbar.jsx
 import React from 'react';
 
 const Navbar = () => {

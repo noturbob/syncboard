@@ -74,7 +74,7 @@ router.delete('/:id', auth, async (req, res) => {
     if (board.owner.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
-    await Board.findByIdAndDelete(req.params.id); // Corrected method
+    await Board.findByIdAndDelete(req.params.id);
     res.json({ msg: 'Board removed' });
   } catch (err) {
     console.error(err.message);

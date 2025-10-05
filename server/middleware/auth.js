@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const redisClient = require('../redisClient'); // Import redisClient
+const redisClient = require('../redisClient');
 
 module.exports = async function (req, res, next) {
   // Get token from the header

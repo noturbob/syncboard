@@ -10,8 +10,8 @@ function useDebounce(value, delay) {
     }, delay);
 
     // Return a cleanup function that will be called every time ...
-    // ... useEffect is re-called. useEffect will be re-called ...
-    // ... whenever the value changes.
+    // useEffect is re-called. useEffect will be re-called ...
+    // whenever the value changes.
     return () => {
       clearTimeout(handler);
     };

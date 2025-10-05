@@ -83,15 +83,15 @@ Follow these instructions to get a copy of the project up and running on your lo
         npm install
 
 4. **Set Up Environment Variables:**
-    *In the server folder, create a .env file.
-    *Add the following variables:
+    In the server folder, create a .env file.
+    Add the following variables:
 
         MONGO_URI=your_mongodb_connection_string
         JWT_SECRET=your_super_secret_jwt_string
 
 5. **Running the Application:**
-    *Start the Redis Server: Ensure your Redis instance is running.
-    *Start the Backend Server (in one terminal):
+    Start the Redis Server: Ensure your Redis instance is running.
+    Start the Backend Server (in one terminal):
 
         cd server
         node index.js

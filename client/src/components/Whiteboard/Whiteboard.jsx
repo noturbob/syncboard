@@ -33,7 +33,7 @@ const Whiteboard = forwardRef(({ color, brushSize, onDraw, socket, boardId, tool
     }
   }));
 
-  // --- Initial Setup and Socket Listeners ---
+  // Initial Setup and Socket Listeners
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -70,7 +70,7 @@ const Whiteboard = forwardRef(({ color, brushSize, onDraw, socket, boardId, tool
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
   
-  // --- Handlers for Drawing Events from Server ---
+  // Handlers for Drawing Events from Server
   const onDrawingEvent = ({ x0, y0, x1, y1, color, brushSize }) => {
     const context = contextRef.current;
     context.beginPath();
@@ -105,7 +105,7 @@ const Whiteboard = forwardRef(({ color, brushSize, onDraw, socket, boardId, tool
     context.stroke();
   };
 
-  // --- Mouse Drawing Functions ---
+  // Mouse Drawing Functions
   const startDrawing = ({ nativeEvent }) => {
     isDrawing.current = true;
     const { offsetX, offsetY } = nativeEvent;

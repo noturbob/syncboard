@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const auth = require('../middleware/auth');
 const User = require('../models/User');
-const redisClient = require('../redisClient'); // <-- Updated import path
+const redisClient = require('../redisClient');
 
 // @route   GET /api/auth
 router.get('/', auth, async (req, res) => {

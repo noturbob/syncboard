@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-// --- INTERSECTION OBSERVER HOOK ---
+// INTERSECTION OBSERVER HOOK
 const useScrollAnimation = (rootMargin = '0px', threshold = 0.2) => {
     const elementsRef = useRef([]);
     useEffect(() => {
@@ -32,7 +32,7 @@ const useScrollAnimation = (rootMargin = '0px', threshold = 0.2) => {
     };
 };
 
-// --- MAIN REACT COMPONENT ---
+// MAIN REACT COMPONENT
 const LandingPage = () => {
     const refForAnimation = useScrollAnimation();
     const heroRefs = {
@@ -117,7 +117,7 @@ const LandingPage = () => {
                         </div>
                         <div ref={heroRefs.board} className="fade-in slide-up" style={{ transitionDelay: '500ms' }}>
                             <div className="relative rounded-2xl border border-accent/50 shadow-2xl shadow-accent/70 p-1 md:p-2 bg-secondary/80 backdrop-blur-sm">
-                                <img src="https://placehold.co/1200x650/16213e/a382ff?text=Syncboard+Interface" alt="SyncBoard whiteboard preview" className="rounded-xl w-full h-auto object-cover border border-accent/50"/>
+                                <img src="./syncboard-interface.png" alt="SyncBoard whiteboard preview" className="rounded-xl w-full h-auto object-cover border border-accent/50"/>
                                 <div className="absolute inset-0 rounded-xl ring-4 ring-accent/50 pointer-events-none animate-ping-slow opacity-50"></div>
                             </div>
                         </div>
