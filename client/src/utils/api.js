@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // This line now dynamically sets the backend URL
-  baseURL: process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/api` : 'http://localhost:4000/api',
+  // FIX: We are now hardcoding the live Render URL directly.
+  baseURL: 'https://syncboard-ch6b.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
