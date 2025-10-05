@@ -1,12 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // This is now hardcoded to your live backend URL.
-  // There are no variables or conditions.
-  baseURL: 'https://syncboard-ch6b.onrender.com/api',
+  baseURL: 'https://syncboard-ch6b.onrender.com/api', // ✅ no trailing slash
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // ✅ Important: allows cookies / CORS credentials
 });
 
 api.interceptors.request.use(
@@ -17,9 +16,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default api;
