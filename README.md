@@ -1,29 +1,33 @@
 <div align="center">
-  <img src="https://your-logo-url-here/syncboard-nav.png" alt="Syncboard Logo" width="120px" />
+  <img src="./client//public/syncboard-nav.png" alt="Syncboard Logo" width="120px" />
   <h1>Syncboard</h1>
   <p>
     A real-time, collaborative whiteboard application built with the MERN stack, WebSockets, and Redis for a seamless, multi-user experience.
   </p>
   
   <p>
-    <a href="https://github.com/your-username/syncboard/actions/workflows/deploy.yml"><img src="https://github.com/your-username/syncboard/actions/workflows/deploy.yml/badge.svg" alt="Build Status"></a>
-    <a href="https://github.com/your-username/syncboard/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-    <a href="https://github.com/your-username/syncboard"><img src="https://img.shields.io/github/stars/your-username/syncboard?style=social" alt="GitHub stars"></a>
+    <a href="https://github.com/noturbob/syncboard"><img src="https://img.shields.io/github/stars/your-username/syncboard?style=social" alt="GitHub stars"></a>
   </p>
 </div>
 
 ---
 
-![Syncboard Demo GIF](https://your-demo-gif-url-here.gif)
-
 ## ✨ Key Features
 
 - **🎨 Real-Time Collaboration**: Draw, create shapes, and see other users' cursors move instantly using WebSockets.
+
 - **🛠️ Full-Featured Toolbar**: Includes pencil, eraser, line, rectangle, and circle tools with adjustable color and brush size.
-- **🔐 Secure User Authentication**: Complete system for registration, login, and password recovery with JWT and a Redis-based token blacklist for secure logouts.
+
+- **🔐 Secure User Authentication**: Complete system for registration, login, and password recovery with JWT and a Redis-based token 
+
+blacklist for secure logouts.
+
 - **💾 Autosave to Cloud**: Whiteboards are automatically saved to MongoDB after a pause in drawing.
+
 - **🗂️ Project Management**: View all saved projects in a responsive carousel, with options to reopen, rename, and delete boards.
+
 - **🔗 Invite System**: Generate unique "Co-board" links to start private, multi-user collaborative sessions.
+
 - **🌙 Modern UI/UX**: A beautiful, responsive dark-purple theme built with Tailwind CSS, featuring glassmorphism and on-scroll animations.
 
 ## 🛠️ Tech Stack
@@ -59,13 +63,13 @@ Follow these instructions to get a copy of the project up and running on your lo
 - [Node.js](https://nodejs.org/) (v18 or later)
 - [npm](https://www.npmjs.com/)
 - [Redis](https://redis.io/) (installed and running locally or via Docker)
-- A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account
 
 ### Installation & Setup
 
 1. **Clone the repository:**
 
-        git clone [https://github.com/your-username/syncboard.git](https://github.com/your-username/syncboard.git)
+        git clone [https://github.com/noturbob/syncboard.git](https://github.com/noturbob/syncboard.git)
         cd syncboard
 
 2. **Install Backend Dependencies:**
@@ -112,5 +116,5 @@ Follow these instructions to get a copy of the project up and running on your lo
     [ ] Show a list of active users in a collaborative session.
 
 <div align="center">
-Made with ❤️ by [Bobby Anthene]
+Made with ❤️ by Bobby Anthene
 </div>
