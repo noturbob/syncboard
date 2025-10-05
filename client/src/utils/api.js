@@ -1,8 +1,15 @@
 import axios from 'axios';
 
+// Check if the app is running in the 'production' environment (on Vercel)
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Set the baseURL based on the environment
+const baseURL = isProduction 
+  ? 'https://syncboard-ch6b.onrender.com/api' 
+  : 'http://localhost:4000/api';
+
 const api = axios.create({
-  // FIX: We are now hardcoding the live Render URL directly.
-  baseURL: 'https://syncboard-ch6b.onrender.com/api',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
