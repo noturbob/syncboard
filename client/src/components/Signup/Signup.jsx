@@ -22,7 +22,7 @@ const Signup = () => {
     setError('');
     try {
       const newUser = { name, email, password };
-      await axios.post('http://localhost:4000/api/auth/signup', newUser);
+      await axios.post('/auth/signup', newUser);
       alert('Signup successful! Please log in.');
       navigate('/login');
     } catch (err) {
