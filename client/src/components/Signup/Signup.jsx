@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from '../../utils/api'; 
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,7 +22,8 @@ const Signup = () => {
     setError('');
     try {
       const newUser = { name, email, password };
-      await axios.post('/auth/signup', newUser);
+      // Use 'api' instead of 'axios' here
+      await api.post('/auth/signup', newUser);
       alert('Signup successful! Please log in.');
       navigate('/login');
     } catch (err) {
